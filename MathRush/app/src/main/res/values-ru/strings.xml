@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Math Rush</string>
+    <string name="score">Очки</string>
+    <string name="mode">Режим</string>
+    <string name="combo">комбо: x2</string>
+
+    <string name="color_theme">Цветовая тема</string>
+    <string name="sound">Звуки</string>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Math Rush</string>
+    <string name="score">Score</string>
+    <string name="mode">Mode</string>
+    <string name="combo">combo: x2</string>
+
+    <string name="color_theme">Color theme</string>
+    <string name="sound">Sound</string>
+</resources>

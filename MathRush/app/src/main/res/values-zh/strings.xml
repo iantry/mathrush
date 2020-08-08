@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">数学冲刺</string>
+    <string name="score">得分</string>
+    <string name="mode">模式</string>
+    <string name="combo">连击: x2</string>
+
+    <string name="color_theme">颜色主题</string>
+    <string name="sound">声音</string>
+</resources>

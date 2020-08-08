@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">数学ラッシュ</string>
+    <string name="score">スコア</string>
+    <string name="mode">モード</string>
+    <string name="combo">コンボ: x2</string>
+
+    <string name="color_theme">カラーテーマ</string>
+    <string name="sound">音</string>
+</resources>
