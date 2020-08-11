@@ -7,4 +7,5 @@
 
     <string name="color_theme">Цветовая тема</string>
     <string name="sound">Звуки</string>
+    <string name="feedback">Оставить отзыв</string>
 </resources>

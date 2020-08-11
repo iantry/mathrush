@@ -7,4 +7,5 @@
 
     <string name="color_theme">Motyw kolorystyczny</string>
     <string name="sound">Dźwięk</string>
+    <string name="feedback">Sprzężenie zwrotne</string>
 </resources>

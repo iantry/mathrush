@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Math Rush</string>
+        <string name="score">स्कोर</string>
+    <string name="mode">मोड</string>
+    <string name="combo">कॉम्बो: x2</string>
+
+    <string name="color_theme">रंग विषय</string>
+    <string name="sound">ध्वनि</string>
+    <string name="feedback">प्रतिपुष्टि</string>
+</resources>

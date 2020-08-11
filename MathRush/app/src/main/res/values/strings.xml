@@ -6,4 +6,5 @@
 
     <string name="color_theme">Color theme</string>
     <string name="sound">Sound</string>
+    <string name="feedback">Feedback</string>
 </resources>

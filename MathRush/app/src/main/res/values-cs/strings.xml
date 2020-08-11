@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Math Rush</string>
+    <string name="score">Skóre</string>
+    <string name="mode">Režim</string>
+    <string name="combo">combo: x2</string>
+
+    <string name="color_theme">Barevný motiv</string>
+    <string name="sound">Zvuk</string>
+    <string name="feedback">Zpětná vazba</string>
+</resources>

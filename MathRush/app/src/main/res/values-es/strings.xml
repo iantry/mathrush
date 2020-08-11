@@ -7,4 +7,5 @@
 
     <string name="color_theme">Tema de color</string>
     <string name="sound">Sonido</string>
+    <string name="feedback">Comentario</string>
 </resources>

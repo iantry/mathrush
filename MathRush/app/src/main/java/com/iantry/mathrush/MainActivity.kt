@@ -1,10 +1,13 @@
 package com.iantry.mathrush
 
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -45,7 +48,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun showEquation() {
 
-        //getHighScore(prefHelper.gameMode)
         val scoreCounter = ScoresCounter()
 
         val equationsGetter = EquationsGetter(this)
@@ -55,13 +57,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         var isUntilHalfTime = true
         var comboMultiplier = 1
 
-
+        //hideCorrectAnswer()
         setEquation(equationPair.first)
-        tvHighScorePoints.text = prefHelper.highScore.toString()
+        setScoreText()
 
         fun incorrect() {
+
             soundEffects.playGameOver()
             scoreCounter.resetScores()
+
+            showCorrectAnswer(equationPair)
+
             buttonsInactive()
             Animator.stopAnswerButtonsAnimation()
             Animator.fillProgressAnswerButtons(correctAnimateView, incorrectAnimateView)
@@ -78,15 +84,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             val currentScore = scoreCounter.calculateScores(comboMultiplier)
-            tvScorePoints.text = currentScore.toString()
-
-            if(currentScore > prefHelper.highScore) {
-                prefHelper.highScore = currentScore
-                tvHighScorePoints.text = currentScore.toString()
-            }
+            setScoreText(currentScore)
 
             val equationHalfAnimListener = object: CompletionBlock {
-
                 override fun onComplete() {
                     equationPair = newEquation()
                     setEquation(equationPair.first)
@@ -134,7 +134,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Animator.startRestartButtonAnimation(restartLayout, Animator.STATE_HIDE)
             Animator.returnAnswerButtons(binder.correctAnimateView, binder.incorrectAnimateView)
             tvScorePoints.text = "0"
-
+            // showEquation()
+            hideCorrectAnswer()
             equationPair = newEquation()
             setEquation(equationPair.first)
             buttonsActive()
@@ -142,6 +143,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun showCorrectAnswer(equationPair: Pair<ArrayList<String>, Boolean>) {
+
+        if(equationPair.second)
+            result.setTextColor(ContextCompat.getColor(this, R.color.colorButtonCorrect))
+        else {
+            val lp = resultFrame.layoutParams as LinearLayout.LayoutParams
+            lp.leftMargin = 0
+            resultCrossOut.visibility = View.VISIBLE
+            correctResult.text = equationPair.first[4]
+            correctResult.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideCorrectAnswer() {
+        if(correctResult.visibility == View.GONE)
+            result.setTextColor(ContextCompat.getColor(this, R.color.colorText))
+        else {
+            val lp = resultFrame.layoutParams as LinearLayout.LayoutParams
+            lp.leftMargin = dpToPx(7).toInt()
+            resultCrossOut.visibility = View.GONE
+            correctResult.visibility = View.GONE
+        }
+    }
 
     private fun initTheme() {
         when (prefHelper.colorTheme) {
@@ -205,6 +229,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     setMenuIcon(item, R.drawable.ic_sound_on)
                     soundEffects.setPlaySound(true)
                 }
+            R.id.feedback -> {
+                var playIntent = Intent(Intent.ACTION_VIEW)
+                playIntent.setData(Uri.parse("market://details?id=com.iantry.mathrush"))
+                startActivity(playIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -214,61 +243,50 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when(v?.id) {
             plusIconFrame.id -> {
                 if (prefHelper.isPlusSignOn) {
-                    if(isNotLastSign()) {
-                        prefHelper.isPlusSignOn = false
-                        prepareNewEquations(1)
-                    }
-                } else {
-                    prefHelper.isPlusSignOn = true
-                    prepareNewEquations( 1)
+                    if (isNotLastSign()) configureNewSign(1, false)
+                }
+                else {
+                    configureNewSign(1, true)
                 }
             }
             minusIconFrame.id -> {
                 if (prefHelper.isMinusSignOn) {
-                    if(isNotLastSign())  {
-                        prefHelper.isMinusSignOn = false
-                        prepareNewEquations( 2)
-                    }
-                } else {
-                    prefHelper.isMinusSignOn = true
-                    prepareNewEquations( 2)
+                    if(isNotLastSign()) configureNewSign( 2, false)
+                }
+                else {
+                    configureNewSign(2, true)
                 }
             }
             multiplyIconFrame.id -> {
                 if (prefHelper.isMultiplySignOn) {
-                    if(isNotLastSign()) {
-                        prefHelper.isMultiplySignOn = false
-                        prepareNewEquations( 3)
-                    }
-                } else {
-                    prefHelper.isMultiplySignOn = true
-                    prepareNewEquations( 3)
+                    if (isNotLastSign()) configureNewSign(3, false)
+                }
+                else {
+                    configureNewSign(3, true)
                 }
             }
             divisionIconFrame.id -> {
                 if (prefHelper.isDivisionSignOn) {
-                    if(isNotLastSign()) {
-                        prefHelper.isDivisionSignOn = false
-                        prepareNewEquations( 4)
-                    }
-                } else {
-                    prefHelper.isDivisionSignOn = true
-                    prepareNewEquations( 4)
+                    if (isNotLastSign()) configureNewSign(4, false)
+                }
+                else {
+                    configureNewSign(4, true)
                 }
             }
         }
     }
 
-    private fun prepareNewEquations(signType: Int = 0) {
-        setScoreText()
+    private fun configureNewSign(signType: Int, isOn: Boolean) {
+        when(signType) {
+            1 -> prefHelper.isPlusSignOn = isOn
+            2 -> prefHelper.isMinusSignOn = isOn
+            3 -> prefHelper.isMultiplySignOn = isOn
+            4 -> prefHelper.isDivisionSignOn = isOn
+        }
         setSigns(signType)
-        showEquation()
-        buttonsInactive()
-    }
-
-    private fun setScoreText() {
-        tvHighScorePoints.text = prefHelper.highScore.toString()
-        tvScorePoints.text = "0"
+        setScoreText()
+        //   showEquation()
+        // buttonsInactive()
     }
 
     private fun setSigns(signType: Int = 0) {
@@ -320,6 +338,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if(prefHelper.isDivisionSignOn)
             counter++
         return counter > 1
+    }
+
+    private fun setScoreText(currentScore: Int = 0) {
+        if(currentScore != 0) {
+            if(currentScore > prefHelper.highScore) {
+                prefHelper.highScore = currentScore
+                tvHighScorePoints.text = currentScore.toString()
+                tvScorePoints.text = currentScore.toString()
+            }
+            else {
+                tvScorePoints.text = currentScore.toString()
+            }
+        }
+        else {
+            tvHighScorePoints.text = prefHelper.highScore.toString()
+            tvScorePoints.text = "0"
+        }
     }
 
     private fun setEquation(equation: ArrayList<String>) {

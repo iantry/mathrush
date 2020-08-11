@@ -209,15 +209,43 @@
             android:textSize="45sp"
             android:textStyle="bold" />
 
+        <FrameLayout
+            android:id="@+id/resultFrame"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="7dp">
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="8"
+                android:textColor="@color/colorText"
+                android:textSize="45sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/resultCrossOut"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_cross_out"
+                android:tint="@color/colorButtonIncorrect"
+                android:visibility="gone"/>
+
+        </FrameLayout>
+
         <TextView
-            android:id="@+id/result"
+            android:id="@+id/correctResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:text="7"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorButtonIncorrect"
             android:textSize="45sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <androidx.cardview.widget.CardView

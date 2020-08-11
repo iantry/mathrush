@@ -1,6 +1,7 @@
 package com.iantry.mathrush
 
 import android.content.Context
+import androidx.core.text.isDigitsOnly
 import kotlin.collections.ArrayList
 
 private const val TAG = "EquationsGetter"
@@ -40,22 +41,40 @@ class EquationsGetter(private val context: Context) {
         } while(!isAdded)
         lastIndex = equationIndex
 
-        return Pair(getSplittedEquation(commonEquations[equationIndex]), isCorrectEquation(commonEquations[equationIndex]))
+        val equationList = getSplittedEquation(commonEquations[equationIndex])
+        val isCorrectEquation = isCorrectEquation(equationList)
+
+        return Pair(equationList, isCorrectEquation)
     }
 
-    private fun isCorrectEquation(equation: String): Boolean {
+    private fun isCorrectEquation(equationList: ArrayList<String>): Boolean {
 
-        //val equationWithoutSpace = equation.replace(" ", "")
-        val equationList = split(equation)
-        val equationDigitList: ArrayList<Int> = arrayListOf()
+        var equationDigitList: ArrayList<Int> = arrayListOf()
         for(i in equationList) {
-            equationDigitList.add(i.toInt())
+            if(i != "+" && i != "-" && i != "×" && i != "÷")
+                equationDigitList.add(i.toInt())
         }
-        return when {
-            equation.contains("+") -> equationDigitList[0] + equationDigitList[1] == equationDigitList[2]
-            equation.contains("-") -> equationDigitList[0] - equationDigitList[1] == equationDigitList[2]
-            equation.contains("×") -> equationDigitList[0] * equationDigitList[1] == equationDigitList[2]
-            else -> equationDigitList[0] / equationDigitList[1] == equationDigitList[2]
+        return when(equationList[1]) {
+            "+" -> {
+                val number = equationDigitList[0] + equationDigitList[1]
+                equationList.add(number.toString())
+                number == equationDigitList[2]
+            }
+            "-" -> {
+                val number = equationDigitList[0] - equationDigitList[1]
+                equationList.add(number.toString())
+                number == equationDigitList[2]
+            }
+            "×" -> {
+                val number = equationDigitList[0] * equationDigitList[1]
+                equationList.add(number.toString())
+                number == equationDigitList[2]
+            }
+            else -> {
+                val number = equationDigitList[0] / equationDigitList[1]
+                equationList.add(number.toString())
+                number == equationDigitList[2]
+            }
         }
     }
 

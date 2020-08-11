@@ -7,4 +7,5 @@
 
     <string name="color_theme">颜色主题</string>
     <string name="sound">声音</string>
+    <string name="feedback">反馈意见</string>
 </resources>

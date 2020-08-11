@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Math Rush</string>
+    <string name="score">Puan</string>
+    <string name="mode">Modu</string>
+    <string name="combo">kombo: x2</string>
+
+    <string name="color_theme">Renk teması</string>
+    <string name="sound">Ses</string>
+    <string name="feedback">Geri bildirim</string>
+</resources>

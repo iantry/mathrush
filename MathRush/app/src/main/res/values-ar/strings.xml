@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Math Rush</string>
+    <string name="score">أحرز هدفا</string>
+    <string name="mode">الوضع</string>
+    <string name="combo">كومبو: x2</string>
+
+    <string name="color_theme">موضوع اللون</string>
+    <string name="sound">صوت</string>
+    <string name="feedback">ردود الفعل</string>
+</resources>

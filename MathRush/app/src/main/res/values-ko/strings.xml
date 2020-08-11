@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Math Rush</string>
+    <string name="score">점수</string>
+    <string name="mode">양식</string>
+    <string name="combo">콤보: x2</string>
+
+    <string name="color_theme">색상 테마</string>
+    <string name="sound">소리</string>
+    <string name="feedback">피드백</string>
+</resources>
