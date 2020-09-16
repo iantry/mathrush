@@ -1,4 +1,4 @@
-package com.iantry.mathrush
+package com.iantry.mathrush.ui
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -8,6 +8,8 @@ import android.content.res.Resources
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
+import com.iantry.mathrush.CompletionBlock
+import com.iantry.mathrush.dpToPx
 import java.util.*
 
 
@@ -43,7 +45,8 @@ class Animator {
 
         fun startAnswerButtonsAnimation(b1: View, b2: View,
                                         halfCompletionBlock: CompletionBlock,
-                                        completionBlock: CompletionBlock) {
+                                        completionBlock: CompletionBlock
+        ) {
 
             val viewWidth = b1.height.toFloat()
             val animationDuration = 3000L
@@ -83,7 +86,7 @@ class Animator {
 
         fun stopAnswerButtonsAnimation() {
 
-            if(::answerButtonAnimSet.isInitialized)
+            if(Companion::answerButtonAnimSet.isInitialized)
                 if (answerButtonAnimSet.isRunning) {
                     timer.cancel()
                     answerButtonAnimSet.cancel()

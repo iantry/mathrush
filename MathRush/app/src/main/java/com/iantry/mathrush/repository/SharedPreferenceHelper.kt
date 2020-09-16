@@ -1,4 +1,4 @@
-package com.iantry.mathrush
+package com.iantry.mathrush.repository
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -19,20 +19,36 @@ private const val MULTIPLY_EQUATION = "multiplyEquation"
 private const val DIVISION_EQUATION = "divisionEquation"
 private const val GAME_MODE = "gameMode"
 
-class SharedPreferenceHelper(context: Context) {
+
+class PrefHelper private constructor(){
 
     companion object {
         const val THEME_DAY = 1
         const val THEME_NIGHT = 2
+        lateinit var prefHelper: PrefHelper
+        private lateinit var context: Context
 
+        /**
+         ** For appContext need use application level context only
+         **/
+        fun instance(appContext: Context): PrefHelper {
+            return if(!Companion::prefHelper.isInitialized) {
+                context = appContext
+                prefHelper = PrefHelper()
+                prefHelper
+            }
+            else prefHelper
+        }
     }
 
-    private val sharedPreferences: SharedPreferences = context.getSharedPreferences(MAIN_PREF, Context.MODE_PRIVATE)
+
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences(MAIN_PREF, Context.MODE_PRIVATE)
 
 
     var isPlusSignOn = sharedPreferences.getBoolean(PLUS_EQUATION, true)
         set(isOn) {
-            if(field != isOn) {
+            if (field != isOn) {
                 field = isOn
                 sharedPreferences.edit().putBoolean(PLUS_EQUATION, isOn).apply()
             }
@@ -40,7 +56,7 @@ class SharedPreferenceHelper(context: Context) {
 
     var isMinusSignOn = sharedPreferences.getBoolean(MINUS_EQUATION, true)
         set(isOn) {
-            if(field != isOn) {
+            if (field != isOn) {
                 field = isOn
                 sharedPreferences.edit().putBoolean(MINUS_EQUATION, isOn).apply()
             }
@@ -48,7 +64,7 @@ class SharedPreferenceHelper(context: Context) {
 
     var isMultiplySignOn = sharedPreferences.getBoolean(MULTIPLY_EQUATION, false)
         set(isOn) {
-            if(field != isOn) {
+            if (field != isOn) {
                 field = isOn
                 sharedPreferences.edit().putBoolean(MULTIPLY_EQUATION, isOn).apply()
             }
@@ -56,13 +72,14 @@ class SharedPreferenceHelper(context: Context) {
 
     var isDivisionSignOn = sharedPreferences.getBoolean(DIVISION_EQUATION, false)
         set(isOn) {
-            if(field != isOn) {
+            if (field != isOn) {
                 field = isOn
                 sharedPreferences.edit().putBoolean(DIVISION_EQUATION, isOn).apply()
             }
         }
 
-    private var highScorePrefName= {HIGH_SCORE + isPlusSignOn + isMinusSignOn + isMultiplySignOn + isDivisionSignOn}
+    private var highScorePrefName =
+        { HIGH_SCORE + isPlusSignOn + isMinusSignOn + isMultiplySignOn + isDivisionSignOn }
 
     var highScore
         get() = sharedPreferences.getInt(highScorePrefName(), 0)
@@ -82,4 +99,27 @@ class SharedPreferenceHelper(context: Context) {
         set(isOn) {
             sharedPreferences.edit().putBoolean(SOUND, isOn).apply()
         }
+
+    fun isLastSign(): Boolean {
+        var counter = 0
+        if (isPlusSignOn)
+            counter++
+        if (isMinusSignOn)
+            counter++
+        if (isMultiplySignOn)
+            counter++
+        if (isDivisionSignOn)
+            counter++
+
+        return counter == 1
+    }
+
+    fun setNewSign(signType: Int, isOn: Boolean) {
+        when (signType) {
+            1 -> isPlusSignOn = isOn
+            2 -> isMinusSignOn = isOn
+            3 -> isMultiplySignOn = isOn
+            4 -> isDivisionSignOn = isOn
+        }
+    }
 }
