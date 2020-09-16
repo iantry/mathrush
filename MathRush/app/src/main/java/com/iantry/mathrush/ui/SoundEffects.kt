@@ -1,26 +1,23 @@
-package com.iantry.mathrush
+package com.iantry.mathrush.ui
 
 import android.content.Context
 import android.media.AudioAttributes
-import android.media.AudioManager
 import android.media.SoundPool
+import com.iantry.mathrush.R
 
 /**
  * Created by Andrey on 07.01.2018.
  */
-class SoundEffects internal constructor(private val context: Context) {
+class SoundEffects internal constructor(context: Context) {
 
         private val soundPool: SoundPool
 
         private var soundWin = 0
         private var soundNext = 0
         private var soundGameOver = 0
-
         private var playSound: Boolean
 
-
         init {
-
             val attributes = AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
