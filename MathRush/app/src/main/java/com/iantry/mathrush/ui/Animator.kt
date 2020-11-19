@@ -110,13 +110,13 @@ class Animator {
             val animationX = ObjectAnimator.ofFloat(view, "translationX", translationX, -displayWidth)
             val animationBackX = ObjectAnimator.ofFloat(view, "translationX", displayWidth, translationX)
 
-            animationX.addListener(object : AnimatorListenerAdapter() {
+            animationX.addListener(object: AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
                     halfCompletionBlock?.onComplete()
                 }
             })
-            animationBackX.addListener(object : AnimatorListenerAdapter() {
+            animationBackX.addListener(object: AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
                     completionBlock?.onComplete()

@@ -65,13 +65,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setButtonClickListeners() {
-        correctBtn.setOnClickListener {
-            equationViewModel.onCorrectBtnClick()
-        }
+        correctBtn.setOnClickListener { equationViewModel.onCorrectBtnClick() }
 
-        incorrectBtn.setOnClickListener {
-            equationViewModel.onIncorrectBtnClick()
-        }
+        incorrectBtn.setOnClickListener { equationViewModel.onIncorrectBtnClick() }
 
         restartButton.setOnClickListener {
             soundEffects.playNext()
@@ -86,24 +82,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun subscribeToData() {
-        equationViewModel.equationLd.observe(this, {
-            setEquation(it)
-        })
-        equationViewModel.scoreLd.observe(this, {
-            setScoreText(it)
-        })
-        settingViewModel.signPlusLd.observe(this, {
-            setPlusSign(it)
-        })
-        settingViewModel.signMinusLd.observe(this, {
-            setMinusSign(it)
-        })
-        settingViewModel.signMultiplyLd.observe(this, {
-            setMultiplySign(it)
-        })
-        settingViewModel.signDivisionLd.observe(this, {
-            setDivisionSign(it)
-        })
+        equationViewModel.equationLd.observe(this) { setEquation(it) }
+
+        equationViewModel.scoreLd.observe(this) { setScoreText(it) }
+
+        settingViewModel.signPlusLd.observe(this) { setPlusSign(it) }
+
+        settingViewModel.signMinusLd.observe(this) { setMinusSign(it) }
+
+        settingViewModel.signMultiplyLd.observe(this, { setMultiplySign(it) })
+
+        settingViewModel.signDivisionLd.observe(this, { setDivisionSign(it) })
     }
 
     private fun subscribeToEvents(){
