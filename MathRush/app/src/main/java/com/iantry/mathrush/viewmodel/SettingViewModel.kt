@@ -4,12 +4,15 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.iantry.mathrush.app
 import com.iantry.mathrush.repository.PrefHelper
 import com.iantry.mathrush.ui.SettingsEvents
+import javax.inject.Inject
 
 class SettingViewModel(application: Application): AndroidViewModel(application), SettingsEvents {
 
-    private val prefHelper = PrefHelper.instance(application.applicationContext)
+    @Inject
+    lateinit var prefHelper: PrefHelper  //PrefHelper.instance(application.applicationContext)
 
     private val mutableSignPlusLd = MutableLiveData<Boolean>()
     var signPlusLd: LiveData<Boolean> = mutableSignPlusLd
@@ -24,6 +27,7 @@ class SettingViewModel(application: Application): AndroidViewModel(application),
     var signDivisionLd: LiveData<Boolean> = mutableSignDivisionLd
 
     init {
+        application.app.appComponent.injectTo(this)
         setPlusSign()
         setMinusSign()
         setMultiplySign()

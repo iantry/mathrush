@@ -1,5 +1,6 @@
 package com.iantry.mathrush
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
@@ -28,3 +29,6 @@ fun Any.positive(value: Int = 0) = if(value < 0) -1 * value else value
 fun Any.log(message: String) {
     Log.d("Log", message)
 }
+
+val Application.app: App
+    get() = this as App

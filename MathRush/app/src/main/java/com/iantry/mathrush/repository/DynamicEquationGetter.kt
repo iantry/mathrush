@@ -6,18 +6,19 @@ import com.iantry.mathrush.positive
 import com.iantry.mathrush.rand
 import kotlin.collections.ArrayList
 
-private const val TAG = "EquationsGetter"
+private const val TAG = "DynamicEquationGetter"
 
-class DynamicEquationGetter(private val context: Context) {
+class DynamicEquationGetter(private val context: Context, private val prefHelper: PrefHelper) : EquationGetter {
 
     private var equationsUsedIndex = linkedSetOf<Int>()
     private var lastIndex = -1
     private lateinit var commonEquations: ArrayList<Equation>
 
-    fun generateEquations() {
+
+    override fun generateEquations() {
 
         commonEquations = arrayListOf()
-        val prefHelper = PrefHelper.instance(context)
+      //  val prefHelper = PrefHelper.instance(context)
 
         if(prefHelper.isPlusSignOn) commonEquations.plusAssign(generateEquation(sign = "+"))
         if(prefHelper.isMinusSignOn) commonEquations.plusAssign(generateEquation(0, 20, "-"))
@@ -26,7 +27,7 @@ class DynamicEquationGetter(private val context: Context) {
         if(commonEquations.size == 0) commonEquations.plusAssign(generateEquation(sign = "+"))
     }
 
-    fun retrieveEquation(): Equation {
+    override fun retrieveEquation(): Equation {
 
         var isAdded = false
         var equationIndex: Int

@@ -19,28 +19,17 @@ private const val HIGH_SCORE_PLUS_MINUS = "highScorePlusMinus"
 private const val SOUND = "sound"
 
 
+class PrefHelper(context: Context) {
 
-class PrefHelper private constructor(){
     companion object {
         const val THEME_DAY = 1
         const val THEME_NIGHT = 2
-        private val prefHelper: PrefHelper by lazy { PrefHelper() }
-        private lateinit var context: Context
-
-        /**
-         ** For appContext need use application level context only
-         **/
-        fun instance(appContext: Context): PrefHelper {
-//            val strs = listOf("a", "bc", "def")
-//            strs.map(String::length)
-            if(!Companion::context.isInitialized) context = appContext
-            return prefHelper
-        }
+       // private val prefHelper: PrefHelper by lazy { PrefHelper() }
     }
+
 
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(MAIN_PREF, Context.MODE_PRIVATE)
-
 
     var isPlusSignOn by sharedPreferences.booleanDelegate()
 

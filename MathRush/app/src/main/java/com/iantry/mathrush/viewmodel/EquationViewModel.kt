@@ -3,13 +3,16 @@ package com.iantry.mathrush.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.iantry.mathrush.App
 import com.iantry.mathrush.Equation
+import com.iantry.mathrush.app
+import com.iantry.mathrush.repository.DataRepository
 import com.iantry.mathrush.ui.UserEvents
+import javax.inject.Inject
 
 class EquationViewModel(application: Application): AndroidViewModel(application), UserEvents {
 
-    private val dataRepository = (application as App).dataRepository
+    @Inject
+    lateinit var dataRepository: DataRepository
 
     val equationLd = MutableLiveData<Equation>()
     val scoreLd = MutableLiveData<Int>()
@@ -18,6 +21,7 @@ class EquationViewModel(application: Application): AndroidViewModel(application)
     var isUntilEquationHalfTime = true
 
     init {
+        application.app.appComponent.injectTo(this)
         generateNewEquations()
         requestNewEquation()
         setScore()

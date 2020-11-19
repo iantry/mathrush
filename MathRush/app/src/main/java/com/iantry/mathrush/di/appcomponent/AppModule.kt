@@ -1,4 +1,4 @@
-package com.iantry.mathrush.di.modules
+package com.iantry.mathrush.di.appcomponent
 
 import android.app.Application
 import android.content.Context

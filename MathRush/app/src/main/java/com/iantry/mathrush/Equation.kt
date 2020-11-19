@@ -1,7 +1,5 @@
 package com.iantry.mathrush
 
-
-
 data class Equation(val value1: Int,
                val value2: Int,
                val answer: Int,

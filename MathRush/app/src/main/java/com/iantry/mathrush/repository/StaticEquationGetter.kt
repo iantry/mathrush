@@ -4,16 +4,16 @@ import android.content.Context
 import com.iantry.mathrush.Equation
 import com.iantry.mathrush.R
 
-class StaticEquationGetter(private val context: Context) {
+class StaticEquationGetter(private val context: Context, private val prefHelper: PrefHelper) : EquationGetter {
 
     private var equationsUsedIndex = linkedSetOf<Int>()
     private var lastIndex = -1
     private lateinit var commonEquations: ArrayList<String>
 
-    fun generateEquations() {
+    override fun generateEquations() {
 
         commonEquations = arrayListOf()
-        val prefHelper = PrefHelper.instance(context)
+       // val prefHelper = PrefHelper.instance(context)
 
         if(prefHelper.isPlusSignOn) commonEquations.addAll(getPlusEquation())
         if(prefHelper.isMinusSignOn) commonEquations.addAll(getMinusEquation())
@@ -27,7 +27,7 @@ class StaticEquationGetter(private val context: Context) {
     private fun getMultiplyEquation() = context.resources.getStringArray(R.array.multiply_equations)
     private fun getDivisionEquation() = context.resources.getStringArray(R.array.division_equations)
 
-    fun retrieveEquation(): Equation {
+    override fun retrieveEquation(): Equation {
 
         var isAdded = false
         var equationIndex: Int

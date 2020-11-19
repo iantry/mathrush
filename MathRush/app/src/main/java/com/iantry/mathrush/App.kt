@@ -2,11 +2,11 @@ package com.iantry.mathrush
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.iantry.mathrush.di.components.AppComponent
-import com.iantry.mathrush.di.modules.AppModule
-import com.iantry.mathrush.di.components.DaggerAppComponent
-import com.iantry.mathrush.di.components.MainActivityComponent
-import com.iantry.mathrush.di.modules.MainActivityModule
+import com.iantry.mathrush.di.appcomponent.AppComponent
+import com.iantry.mathrush.di.appcomponent.AppModule
+import com.iantry.mathrush.di.appcomponent.DaggerAppComponent
+import com.iantry.mathrush.di.mainactivitycomponent.MainActivityComponent
+import com.iantry.mathrush.di.mainactivitycomponent.MainActivityModule
 import com.iantry.mathrush.repository.DataRepository
 import com.iantry.mathrush.ui.MainActivity
 import javax.inject.Inject
