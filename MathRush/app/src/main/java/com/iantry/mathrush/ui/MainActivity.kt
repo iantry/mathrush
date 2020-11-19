@@ -13,27 +13,38 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.iantry.mathrush.*
+import com.iantry.mathrush.di.modules.AppModule
+import com.iantry.mathrush.di.modules.MainActivityModule
 import com.iantry.mathrush.repository.PrefHelper.Companion.THEME_DAY
 import com.iantry.mathrush.repository.PrefHelper.Companion.THEME_NIGHT
 
 import com.iantry.mathrush.viewmodel.EquationViewModel
 import com.iantry.mathrush.viewmodel.SettingViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var soundEffects: SoundEffects
-    private lateinit var equationViewModel: EquationViewModel
+    @Inject
+    lateinit var soundEffects: SoundEffects
+    @Inject
+    lateinit var equationViewModel: EquationViewModel
     private lateinit var settingViewModel: SettingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //(application as App).appComponent
+       // (application as App).appComponent.injectTo(this)
+        (application as App).initMainActivityComponent(this)
+            .injectTo(this)
+      //  mainActivityComponent.injectTo(this)
+
         setSupportActionBar(toolbar)
         setTitle(R.string.app_name)
 
         getViewModel()
-        initSoundEffects()
+        measureSoundEffects()
         setButtonClickListeners()
         subscribeToData()
         subscribeToEvents()
@@ -41,15 +52,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getViewModel() {
-        equationViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))
-            .get(EquationViewModel::class.java)
+//        equationViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))
+//            .get(EquationViewModel::class.java)
 
-        settingViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))
+        settingViewModel =
+            ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))
             .get(SettingViewModel::class.java)
     }
 
-    private fun initSoundEffects() {
-        soundEffects = SoundEffects(this)
+    private fun measureSoundEffects() {
         soundEffects.setPlaySound(settingViewModel.isSoundOn())
     }
 

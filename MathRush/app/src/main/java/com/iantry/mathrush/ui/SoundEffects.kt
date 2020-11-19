@@ -8,7 +8,7 @@ import com.iantry.mathrush.R
 /**
  * Created by Andrey on 07.01.2018.
  */
-class SoundEffects internal constructor(context: Context) {
+class SoundEffects constructor(context: Context) {
 
         private val soundPool: SoundPool
 
